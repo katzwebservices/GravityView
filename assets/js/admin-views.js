@@ -2604,7 +2604,7 @@
 		   e.preventDefault();
 
 		   var vcfg = viewConfiguration;
-		   var area = $( e.currentTarget ).parents( ".active-drop" );
+			var area = $( e.currentTarget ).parentsUntil( ".active-drop" ).parent();
 
 		   vcfg.setUnsavedChanges( true );
 
@@ -2615,7 +2615,7 @@
 			   return;
 		   }
 
-		   $( e.currentTarget ).parents( '.gv-fields' ).fadeOut( 'fast', function () {
+			$( e.currentTarget ).parentsUntil( '.gv-fields' ).parent().fadeOut( 'fast', function () {
 
 			   $( this ).remove();
 
