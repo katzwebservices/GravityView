@@ -1,18 +1,40 @@
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 
-test( 'GravityView submenu items are available under the GravityKit menu', async ({page}) => {
-	await page.goto( '/wp-admin' );
+import { wpLogin } from '../helpers/wp-login';
+import path from 'path';
+import fs from 'fs/promises';
 
-	const gravityKitMenuSelector = '#toplevel_page__gk_admin_menu';
+require('dotenv').config({ path: `${process.env.INIT_CWD}/.env` });
 
-	await page.waitForSelector( gravityKitMenuSelector );
+const storageState = path.join(__dirname, '../setup/.state.json');
 
-	const submenus = await page.locator( `${ gravityKitMenuSelector } .wp-submenu a` ).allTextContents();
+const url = process.env.URL;
 
-	const submenuTitles = submenus.map( item => item.replace( /\d+$/, '' ).trim() ); // Remove the trailing number as it's a hidden <span class="plugin-count">0</span> element.
+test('GravityView submenu items are available under the GravityKit menu', async ({
+  page,
+}) => {
+  try {
+    await fs.access(storageState);
+  } catch (error) {
+    console.error('State file does not exist:', error);
+    throw error;
+  }
 
-	expect( submenuTitles ).toContain( 'All Views' );
-	expect( submenuTitles ).toContain( 'New View' );
-	expect( submenuTitles ).toContain( 'Getting Started' );
-} );
+  await wpLogin({ page, stateFile: storageState });
 
+  await page.goto(`${url}/wp-admin`);
+
+  const gravityKitMenuSelector = '#toplevel_page__gk_admin_menu';
+
+  await page.waitForSelector(gravityKitMenuSelector);
+
+  const submenus = await page
+    .locator(`${gravityKitMenuSelector} .wp-submenu a`)
+    .allTextContents();
+
+  const submenuTitles = submenus.map((item) => item.replace(/\d+$/, '').trim()); // Remove the trailing number as it's a hidden <span class="plugin-count">0</span> element.
+
+  expect(submenuTitles).toContain('All Views');
+  expect(submenuTitles).toContain('New View');
+  expect(submenuTitles).toContain('Getting Started');
+});
