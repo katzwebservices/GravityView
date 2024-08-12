@@ -65,3 +65,4 @@ wordpress-latest-tests-lib
 /tests/E2E/setup/.state.json
 /tests/E2E/**/report/
 /tests/E2E/**/results/
+test-results/
