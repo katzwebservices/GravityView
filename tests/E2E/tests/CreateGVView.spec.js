@@ -1,26 +1,11 @@
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
-import { wpLogin } from '../helpers/wp-login';
-import path from 'path';
-import fs from 'fs/promises';
 import { importGravityFormsData } from '../helpers/importer';
 
 require('dotenv').config({ path: `${process.env.INIT_CWD}/.env` });
 
-const storageState = path.join(__dirname, '../setup/.state.json');
 const url = process.env.URL;
 
 test.describe('GravityView View Creation', () => {
-  test.beforeEach(async ({ page }) => {
-    try {
-      await fs.access(storageState);
-    } catch (error) {
-      console.error('State file does not exist:', error);
-      throw error;
-    }
-
-    await wpLogin({ page, stateFile: storageState });
-  });
-
   test('Create a new GravityView view', async ({ page }) => {
     await page.goto(`${url}/wp-admin/edit.php?post_type=gravityview`);
     await page.waitForSelector('text=New View', { state: 'visible' });
