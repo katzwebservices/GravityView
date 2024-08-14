@@ -74,7 +74,10 @@ test.describe('GravityView View Creation', () => {
       await selectButtonLocator.waitFor({ state: 'visible' });
       await selectButtonLocator.click();
 
-      await page.click('#publish');
+      await Promise.all([
+        page.click('#publish'),
+        page.waitForURL(/\/wp-admin\/post\.php\?post=\d+&action=edit/),
+      ]);
 
       await page.waitForSelector('.notice-success');
       const successMessage = await page.textContent('.notice-success');
