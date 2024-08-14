@@ -64,28 +64,22 @@ test.describe('GravityView View Creation', () => {
         '.gv-view-types-module:has(h5:text("Table"))'
       );
 
-      if (tableTemplateSelector) {
-        await tableTemplateSelector.hover();
-        const selectButtonLocator = page.locator(
-          'a.gv_select_template[data-templateid="default_table"]'
-        );
-        await selectButtonLocator.waitFor({ state: 'visible' });
-        await selectButtonLocator.click();
-      } else {
+      if (!tableTemplateSelector) {
         throw new Error('Table template not found.');
       }
+
+      await tableTemplateSelector.hover();
+      const selectButtonLocator = page.locator(
+        'a.gv_select_template[data-templateid="default_table"]'
+      );
+      await selectButtonLocator.waitFor({ state: 'visible' });
+      await selectButtonLocator.click();
 
       await page.click('#publish');
 
       await page.waitForSelector('.notice-success');
       const successMessage = await page.textContent('.notice-success');
       expect(successMessage).toContain('View updated');
-    } else if (await page.isVisible('#gv-view-configuration-tabs')) {
-      console.log('#gv-view-configuration-tabs is visible');
-    } else {
-      throw new Error(
-        'Neither #gravityview_select_template nor #gv-view-configuration-tabs is visible'
-      );
     }
 
     await page.waitForSelector('.gv-fields');
