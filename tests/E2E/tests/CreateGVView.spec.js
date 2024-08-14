@@ -58,7 +58,6 @@ test.describe('GravityView View Creation', () => {
     ]);
 
     if (await page.isVisible('#gravityview_select_template')) {
-      console.log('#gravityview_select_template is visible');
       await page.waitForSelector('.gv-view-types-module', { state: 'visible' });
       const tableTemplateSelector = await page.$(
         '.gv-view-types-module:has(h5:text("Table"))'
