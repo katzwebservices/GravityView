@@ -1,22 +1,36 @@
 /**
- * Helper function to get the value of an option from a select element by matching the title.
+ * Selects a Gravity Form from the dropdown by matching the form title.
+ * Throws an error if the form title is not found.
  *
  * @param {object} page - The Playwright page object.
- * @param {string} formTitle - The title of the form to search for in the select options.
- * @returns {Promise<string>} - The value of the matched option, or an empty string if not found.
+ * @param {string} formTitle - The title of the Gravity Form to select.
+ * @throws Will throw an error if the form title is not found.
  */
-async function getOptionValueByFormTitle(page, formTitle) {
-  return await page.evaluate((formTitle) => {
-    const select = document.querySelector('#gravityview_form_id');
-    const options = Array.from(select.options);
-    const lowerCaseFormTitle = formTitle.toLowerCase();
-    const option = options.find((opt) =>
-      opt.textContent.trim().toLowerCase().startsWith(lowerCaseFormTitle)
-    );
-    return option ? option.value : '';
-  }, formTitle);
+async function selectGravityFormByTitle(page, formTitle) {
+  const formSelector = '#gravityview_form_id';
+
+  await page.waitForSelector(formSelector);
+
+  const optionValue = await page.evaluate(
+    ({ formTitle, selector }) => {
+      const select = document.querySelector(selector);
+      const options = Array.from(select.options);
+      const lowerCaseFormTitle = formTitle.toLowerCase();
+      const option = options.find((opt) =>
+        opt.textContent.trim().toLowerCase().startsWith(lowerCaseFormTitle)
+      );
+      return option ? option.value : '';
+    },
+    { formTitle, selector: formSelector }
+  );
+
+  if (optionValue) {
+    await page.selectOption(formSelector, optionValue);
+  } else {
+    throw new Error(`Form with title "${formTitle}" not found.`);
+  }
 }
 
 module.exports = {
-  getOptionValueByFormTitle,
+  selectGravityFormByTitle,
 };
