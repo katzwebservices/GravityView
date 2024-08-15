@@ -1,5 +1,8 @@
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
-import { getOptionValueByFormTitle } from '../../helpers/test-helpers';
+import {
+  getOptionValueByFormTitle,
+  selectGravityFormByTitle,
+} from '../../helpers/test-helpers';
 
 require('dotenv').config({ path: `${process.env.INIT_CWD}/.env` });
 
@@ -16,15 +19,7 @@ test.describe('GravityView View Creation', () => {
       title: 'A Simple Form',
     };
 
-    await page.waitForSelector('#gravityview_form_id');
-
-    const optionValue = await getOptionValueByFormTitle(page, form.title);
-
-    if (optionValue) {
-      await page.selectOption('#gravityview_form_id', optionValue);
-    } else {
-      throw new Error(`Form with title "${form.title}" not found.`);
-    }
+    await selectGravityFormByTitle(page, form.title);
 
     await page.fill('#title', 'Test View');
     await page.click('#publish');
