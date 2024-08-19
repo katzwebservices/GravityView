@@ -44,9 +44,7 @@ test.describe('GravityView View Creation', () => {
 
     if (await page.isVisible('#gravityview_select_template')) {
       await page.waitForSelector('.gv-view-types-module', { state: 'visible' });
-      const tableTemplateSelector = await page.$(
-        '.gv-view-types-module:has(h5:text("Table"))'
-      );
+      const tableTemplateSelector = await page.$('div.gv-view-types-module:has(a.gv_select_template[href="#gv_select_template"][data-templateid="default_table"])');
 
       if (!tableTemplateSelector) {
         throw new Error('Table template not found.');
