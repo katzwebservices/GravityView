@@ -10,7 +10,7 @@ module.exports = defineConfig( {
 		'{testDir}/snapshots/{testFileDir}/{testName}-snapshots/{arg}{ext}',
 	fullyParallel: true,
 	forbidOnly: !!process.env.CI,
-	retries: process.env.CI ? 2 : 0,
+	retries: 2,
 	workers: process.env.CI ? 1 : undefined,
 	reporter: [
 		[
