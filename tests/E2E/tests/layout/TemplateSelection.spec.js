@@ -60,7 +60,6 @@ test.describe('GravityView Template Selection', () => {
       await templateSelector.hover();
       await page.dispatchEvent(template.selector, 'mouseenter');
       await selectButtonLocator.waitFor({ state: 'visible' });
-      await page.screenshot({ path: 'test-screenshot-2.png' });
       await selectButtonLocator.click();
 
       await Promise.all([
