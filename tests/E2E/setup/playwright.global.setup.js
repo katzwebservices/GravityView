@@ -64,15 +64,23 @@ module.exports = async (config) => {
     throw error;
   }
 
+  let browser;
+
   try {
     await fs.access(stateFile);
-
     console.log('Loading previously saved state…');
   } catch (error) {
-    const browser = await waitForWsEndpoint(wsEndpoint);
-    const context = await browser.newContext();
-    const page = await context.newPage();
+    browser = await waitForWsEndpoint(wsEndpoint);
+  }
 
+  if (!browser) {
+    browser = await waitForWsEndpoint(wsEndpoint);
+  }
+
+  const context = await browser.newContext();
+  const page = await context.newPage();
+  
+  if (!await fs.access(stateFile).then(() => true).catch(() => false)) {
     await wpLogin({ page, stateFile });
   }
 };
