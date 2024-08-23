@@ -30,7 +30,7 @@ test.describe('GravityView Template Selection', () => {
   };
 
   for (const template of templates) {
-    test(`Verify GravityView template: ${template.name}`, async ({ page }) => {
+    test(`Verify GravityView template: ${template.name}`, async ({ page }, testInfo) => {
       await page.goto(`${url}/wp-admin/edit.php?post_type=gravityview`);
       await page.waitForSelector('text=New View', { state: 'visible' });
 
@@ -50,9 +50,11 @@ test.describe('GravityView Template Selection', () => {
 
       const templateSelector = await page.$(template.selector);
 
-      //TODO: Check if is placeholder
-      const placeholder = '.gv-view-template-placeholder';
+      const isPlaceholder = await templateSelector.evaluate(element =>
+        element.classList.contains('gv-view-template-placeholder')
+      );
 
+      testInfo.skip(isPlaceholder, `${template.name} template not found.`);
       
       const selectButtonLocator = page.locator(
         `a.gv_select_template[data-templateid="${template.slug}"]`
