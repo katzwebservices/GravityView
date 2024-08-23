@@ -11,16 +11,22 @@ test.describe('GravityView Template Selection', () => {
       name: 'Table',
       slug: 'default_table',
       selector: '.gv-view-types-module:has(h5:text("Table"))',
+      container: '.gv-table-container',
+      contains: 'table.gv-table-view',
     },
     {
       name: 'List',
       slug: 'default_list',
       selector: '.gv-view-types-module:has(h5:text("List"))',
+      container: '.gv-list-container',
+      contains: 'ul.gv-list-view',
     },
     {
       name: 'DataTables Table',
       slug: 'datatables_table',
       selector: '.gv-view-types-module:has(h5:text("DataTables Table"))',
+      container: '.gv-datatables-container',
+      contains: 'table.dataTable',
     },
   ];
 
@@ -64,6 +70,12 @@ test.describe('GravityView Template Selection', () => {
       await selectButtonLocator.waitFor({ state: 'visible' });
       await selectButtonLocator.click();
 
+      await page.waitForSelector('#gravityview_settings', { state: 'visible' });
+
+      const checkbox = page.locator('#gravityview_se_show_only_approved');
+
+      await checkbox.isVisible() && checkbox.uncheck();
+
       await Promise.all([
         page.click('#publish'),
         page.waitForURL(/\/wp-admin\/post\.php\?post=\d+&action=edit/),
@@ -76,10 +88,15 @@ test.describe('GravityView Template Selection', () => {
       const viewUrl = await page.$eval('#sample-permalink', (el) => el.href);
       await page.goto(viewUrl);
 
-      // TODO: Add actual verification logic
       await page.waitForURL(viewUrl);
-      const entryExists = await page.locator('.gv-grid');
-      expect(entryExists).toBeTruthy();
+      const containerExists = await page.locator(template.container).isVisible();
+      expect(containerExists).toBeTruthy();
+
+      // Check below is simplified for List View since it has no default fields.
+      if (template.contains && template.slug !== 'default_list') {
+        const elementExists = await page.locator(`${template.container} ${template.contains}`).isVisible();
+        expect(elementExists).toBeTruthy();
+      }
 
     });
   }
