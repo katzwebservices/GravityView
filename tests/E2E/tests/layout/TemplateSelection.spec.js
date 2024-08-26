@@ -1,5 +1,5 @@
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
-import { selectGravityFormByTitle } from '../../helpers/test-helpers';
+import { selectGravityFormByTitle, gotoAndEnsureLoggedIn } from '../../helpers/test-helpers';
 
 require('dotenv').config({ path: `${process.env.INIT_CWD}/.env` });
 
@@ -37,7 +37,8 @@ test.describe('GravityView Template Selection', () => {
 
   for (const template of templates) {
     test(`Verify GravityView template: ${template.name}`, async ({ page }, testInfo) => {
-      await page.goto(`${url}/wp-admin/edit.php?post_type=gravityview`);
+      await gotoAndEnsureLoggedIn(page, testInfo);
+      
       await page.waitForSelector('text=New View', { state: 'visible' });
 
       await page.click('text=New View');
