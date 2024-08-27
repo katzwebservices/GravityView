@@ -81,14 +81,9 @@ test.describe('GravityView View Creation', () => {
       '.gravityview-item-picker-tooltip .gv-items-picker-container > div[data-fieldid="date_created"]'
     );
 
-    const addedFieldSelector =
-      '#directory-active-fields .active-drop[data-areaid="directory_table-columns"] .field-id-date_created';
-    await page.waitForSelector(addedFieldSelector, { state: 'visible' });
+    const addedFieldSelector = page.getByRole('heading', { name: 'Configure Date Created' });
 
-    const fieldCount = await page.$$eval(
-      addedFieldSelector,
-      (fields) => fields.length
-    );
-    expect(fieldCount).toBeGreaterThan(0);
+    await expect(addedFieldSelector).toBeVisible();
+
   });
 });
