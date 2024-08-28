@@ -81,7 +81,7 @@ test.describe('GravityView View Creation', () => {
       '.gravityview-item-picker-tooltip .gv-items-picker-container > div[data-fieldid="date_created"]'
     );
 
-    const addedFieldSelector = page.getByRole('heading', { name: 'Configure Date Created' });
+    const addedFieldSelector = page.locator('#directory-active-fields').getByTitle('Field: Date Created\nThe date the entry was created.\nForm ID:').locator('span');
 
     await expect(addedFieldSelector).toBeVisible();
 
