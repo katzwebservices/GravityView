@@ -1,8 +1,6 @@
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 import { gotoAndEnsureLoggedIn } from '../helpers/test-helpers';
 
-require('dotenv').config({ path: `${process.env.INIT_CWD}/.env` });
-
 const url = process.env.URL;
 
 test('GravityView submenu items are available under the GravityKit menu', async ({

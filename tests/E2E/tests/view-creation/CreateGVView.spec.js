@@ -4,8 +4,6 @@ import {
   selectGravityFormByTitle,
 } from '../../helpers/test-helpers';
 
-require('dotenv').config({ path: `${process.env.INIT_CWD}/.env` });
-
 const url = process.env.URL;
 
 test.describe('GravityView View Creation', () => {

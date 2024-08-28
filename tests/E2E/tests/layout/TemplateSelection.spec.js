@@ -1,8 +1,6 @@
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 import { selectGravityFormByTitle, gotoAndEnsureLoggedIn } from '../../helpers/test-helpers';
 
-require('dotenv').config({ path: `${process.env.INIT_CWD}/.env` });
-
 const url = process.env.URL;
 
 test.describe('GravityView Template Selection', () => {

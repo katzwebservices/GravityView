@@ -1,8 +1,6 @@
 const { wpLogin } = require('./wp-login');
 const path = require('path');
 
-// require('dotenv').config({ path: `${process.env.INIT_CWD}/.env` });
-
 const url = process.env.URL;
 
 const defaultGVAdminURL = `${url}/wp-admin/edit.php?post_type=gravityview`;
