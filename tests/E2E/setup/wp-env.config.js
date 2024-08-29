@@ -15,7 +15,6 @@ const wpEnvConfig = {
   plugins: [
     '../../..',
     process.env.GRAVITY_FORMS_FOLDER || '/tmp/gravityforms',
-    process.env.GF_FORM_IMPORTER || '/tmp/gf-forms-importer',
     ...localPlugins,
   ],
   port: parseInt(process.env.WP_ENV_PORT, 10) || 8888,
