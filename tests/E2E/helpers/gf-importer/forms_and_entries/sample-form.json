@@ -1,0 +1,32 @@
+{
+    "form": {
+      "title": "Sample Form",
+      "fields": [
+        {
+          "id": 1,
+          "label": "Name",
+          "type": "text",
+          "adminLabel": "name_field"
+        },
+        {
+          "id": 2,
+          "label": "Email",
+          "type": "email",
+          "adminLabel": "email_field"
+        }
+      ]
+    },
+    "entries": [
+      {
+        "Name": "John Doe",
+        "Email": "john@example.com",
+        "date_created": "2024-08-28 10:00:00"
+      },
+      {
+        "Name": "Jane Smith",
+        "Email": "jane@example.com",
+        "date_created": "2024-08-28 10:05:00"
+      }
+    ]
+  }
+  
