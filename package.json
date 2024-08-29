@@ -7,7 +7,7 @@
     "@playwright/test": "1.44.0",
     "@types/node": "^20.14.14",
     "@wordpress/e2e-test-utils-playwright": "^0.24.0",
-    "@wordpress/env": "^9.10.0",
+    "@wordpress/env": "^10.6.0",
     "@wordpress/scripts": "^27.9.0",
     "autoprefixer": "^9.8.8",
     "dotenv": "^16.4.5",
