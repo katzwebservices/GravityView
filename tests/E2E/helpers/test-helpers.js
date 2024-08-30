@@ -1,5 +1,5 @@
 const path = require('path');
-const { test } = require('@playwright/test');
+const { test, expect } = require('@playwright/test');
 
 const url = process.env.URL;
 
@@ -65,7 +65,90 @@ async function gotoAndEnsureLoggedIn(page, testInfo = null, url = defaultGVAdmin
   }
 }
 
+/**
+ * Helper function to create a GravityView.
+ *
+ * @param {import('playwright').Page} page - The Playwright page object.
+ * @param {Object} params - Parameters for creating the view.
+ * @param {string} params.formTitle - The title of the Gravity Form to select.
+ * @param {string} params.viewName - The name to assign to the new view.
+ * @param {Object} params.template - The template details.
+ * @param {string} params.template.name - The name of the template.
+ * @param {string} params.template.selector - The CSS selector for the template.
+ * @param {string} params.template.slug - The slug of the template.
+ * @param {string} params.template.container - The CSS selector for the container to check.
+ * @param {string} params.template.contains - Optional CSS selector for specific content check.
+ */
+async function createView(page, { formTitle, viewName, template }) {
+  await page.waitForSelector('text=New View', { state: 'visible' });
+  await page.click('text=New View');
+  await selectGravityFormByTitle(page, formTitle);
+
+  await page.fill('#title', viewName);
+
+  await page.waitForSelector('#gravityview_select_template', { state: 'visible' });
+  await page.waitForSelector('.gv-view-types-module', { state: 'visible' });
+
+  const templateSelector = await page.$(template.selector);
+  const isPlaceholder = await templateSelector.evaluate(element =>
+      element.classList.contains('gv-view-template-placeholder')
+  );
+
+  if (isPlaceholder) {
+      throw new Error(`${template.name} template not found.`);
+  }
+
+  const selectButtonLocator = page.locator(`a.gv_select_template[data-templateid="${template.slug}"]`);
+  await templateSelector.hover();
+  await page.dispatchEvent(template.selector, 'mouseenter');
+  await selectButtonLocator.waitFor({ state: 'visible' });
+  await selectButtonLocator.click();
+
+  await page.waitForSelector('#gravityview_settings', { state: 'visible' });
+
+  const checkbox = page.locator('#gravityview_se_show_only_approved');
+  if (await checkbox.isVisible()) {
+      await checkbox.uncheck();
+  }
+
+}
+
+/**
+ * Helper function to publish a GravityView.
+ *
+ * @param {import('playwright').Page} page - The Playwright page object.
+ */
+async function publishView(page) {
+  await Promise.all([
+      page.click('#publish'),
+      page.waitForURL(/\/wp-admin\/post\.php\?post=\d+&action=edit/)
+  ]);
+
+  await page.waitForSelector('.notice-success');
+  const successMessage = await page.textContent('.notice-success');
+  expect(successMessage).toMatch(/View (published|updated)/);
+
+}
+
+/**
+ * Helper function to check a newly created GravityView on the front end.
+ *
+ * @param {import('playwright').Page} page - The Playwright page object.
+ * @param {string} permalinkSelector - The CSS selector for the permalink element.
+ */
+async function checkViewOnFrontEnd(page, permalinkSelector = '#sample-permalink') {
+  const viewUrl = await page.$eval(permalinkSelector, (el) => el.href);
+
+  await page.goto(viewUrl);
+
+  await page.waitForURL(viewUrl);
+}
+
+
 module.exports = {
   selectGravityFormByTitle,
   gotoAndEnsureLoggedIn,
+  createView,
+  publishView,
+  checkViewOnFrontEnd,
 };
