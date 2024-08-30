@@ -1,32 +1,30 @@
 {
-    "form": {
-      "title": "Sample Form",
-      "fields": [
-        {
-          "id": 1,
-          "label": "Name",
-          "type": "text",
-          "adminLabel": "name_field"
-        },
-        {
-          "id": 2,
-          "label": "Email",
-          "type": "email",
-          "adminLabel": "email_field"
-        }
-      ]
-    },
-    "entries": [
+  "form": {
+    "title": "Sample Form",
+    "description": "This is a sample form.",
+    "fields": [
       {
-        "Name": "John Doe",
-        "Email": "john@example.com",
-        "date_created": "2024-08-28 10:00:00"
+        "id": 1,
+        "type": "text",
+        "label": "Full Name",
+        "isRequired": true
       },
       {
-        "Name": "Jane Smith",
-        "Email": "jane@example.com",
-        "date_created": "2024-08-28 10:05:00"
+        "id": 2,
+        "type": "email",
+        "label": "Email Address",
+        "isRequired": true
       }
     ]
-  }
-  
+  },
+  "entries": [
+    {
+      "1": "Alice Wonderland",
+      "2": "alice@example.com"
+    },
+    {
+      "1": "Bob Builder",
+      "2": "bob@example.com"
+    }
+  ]
+}
