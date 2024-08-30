@@ -1,5 +1,5 @@
-const { wpLogin } = require('./wp-login');
 const path = require('path');
+const { test } = require('@playwright/test');
 
 const url = process.env.URL;
 
@@ -51,15 +51,17 @@ async function selectGravityFormByTitle(page, formTitle) {
  * @param {string} [url=defaultGVAdminURL] - The URL to navigate to and check login status.
  * @param {string} [stateFile=storageState] - The path to the storage state file.
  */
-async function gotoAndEnsureLoggedIn(page, testInfo, url = defaultGVAdminURL, stateFile = storageState) {
+async function gotoAndEnsureLoggedIn(page, testInfo = null, url = defaultGVAdminURL, stateFile = storageState) {
   await page.goto(url);
 
   const adminBarSelector = '#wpadminbar';
   const isLoggedIn = await page.$(adminBarSelector);
+  const skipMessage = 'User not logged in. Delete old state file and try again.';
+
 
   if (!isLoggedIn) {
-      console.log('User is not logged in. Skipping test...');
-      testInfo.skip(!isLoggedIn, 'Login required. Please delete the old state file and try again.');
+    console.log(skipMessage);
+    testInfo ? testInfo.skip(!isLoggedIn, skipMessage) : test.skip(skipMessage);
   }
 }
 
