@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { checkViewOnFrontEnd, createView, gotoAndEnsureLoggedIn, publishView, templates } from '../helpers/test-helpers';
+import { checkViewOnFrontEnd, createView, gotoAndEnsureLoggedIn, publishView, templates } from '../../helpers/test-helpers';
 
 test('Verify No Entries Behavior', async ({ page }, testInfo) => {
     await gotoAndEnsureLoggedIn(page, testInfo);

@@ -1,5 +1,5 @@
 import { test, expect, chromium } from '@playwright/test';
-import { checkViewOnFrontEnd, countTableEntries, createView, gotoAndEnsureLoggedIn, publishView, templates } from '../helpers/test-helpers';
+import { checkViewOnFrontEnd, countTableEntries, createView, gotoAndEnsureLoggedIn, publishView, templates } from '../../helpers/test-helpers';
 
 const filteredTemplates = templates.filter(template => template.name !== 'List');
 

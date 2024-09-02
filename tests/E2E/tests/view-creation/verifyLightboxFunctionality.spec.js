@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { gotoAndEnsureLoggedIn, selectGravityFormByTitle } from '../helpers/test-helpers';
+import { gotoAndEnsureLoggedIn, selectGravityFormByTitle } from '../../helpers/test-helpers';
 
 test('Verify Lightbox Functionality for Images', async ({ page }, testInfo) => {
     await gotoAndEnsureLoggedIn(page, testInfo);

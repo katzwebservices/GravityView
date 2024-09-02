@@ -1,13 +1,13 @@
 import { test, expect } from '@playwright/test';
-import { checkViewOnFrontEnd, createView, gotoAndEnsureLoggedIn, publishView, templates } from '../helpers/test-helpers';
+import { checkViewOnFrontEnd, createView, gotoAndEnsureLoggedIn, publishView, templates } from '../../helpers/test-helpers';
 
-test('Verify Cancel Link Text', async ({ page }, testInfo) => {
+test('Verify Delete Link Text', async ({ page }, testInfo) => {
     await gotoAndEnsureLoggedIn(page, testInfo);
-    await createView(page, { formTitle: 'Event Registration', viewName: 'Verify Cancel Link Text Test', template: templates[0] });
+    await createView(page, { formTitle: 'Event Registration', viewName: 'Verify Delete Link Text Test', template: templates[0] });
 
     await page.locator('#gravityview_settings div').getByRole('link', { name: 'Edit Entry' }).click();
-    const customMessage = "Forget It, Jack";
-    await page.getByLabel('Cancel Link Text').fill(customMessage);
+    const customMessage = "Erase This Drama!";
+    await page.getByLabel('Delete Link Text').fill(customMessage);
     await publishView(page);
     await checkViewOnFrontEnd(page);
     await page.getByRole('link', { name: 'John Doe' }).click();
