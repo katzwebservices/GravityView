@@ -7,6 +7,30 @@ const defaultGVAdminURL = `${url}/wp-admin/edit.php?post_type=gravityview`;
 
 const storageState = path.join(__dirname, '../setup/.state.json');
 
+const templates = [
+  {
+    name: 'Table',
+    slug: 'default_table',
+    selector: '.gv-view-types-module:has(h5:text("Table"))',
+    container: '.gv-table-container',
+    contains: 'table.gv-table-view',
+  },
+  {
+    name: 'List',
+    slug: 'default_list',
+    selector: '.gv-view-types-module:has(h5:text("List"))',
+    container: '.gv-list-container',
+    contains: 'ul.gv-list-view',
+  },
+  {
+    name: 'DataTables Table',
+    slug: 'datatables_table',
+    selector: '.gv-view-types-module:has(h5:text("DataTables Table"))',
+    container: '.gv-datatables-container',
+    contains: 'table.dataTable',
+  },
+];
+
 /**
  * Selects a Gravity Form from the dropdown by matching the form title.
  * Throws an error if the form title is not found.
@@ -146,6 +170,7 @@ async function checkViewOnFrontEnd(page, permalinkSelector = '#sample-permalink'
 
 
 module.exports = {
+  templates,
   selectGravityFormByTitle,
   gotoAndEnsureLoggedIn,
   createView,
