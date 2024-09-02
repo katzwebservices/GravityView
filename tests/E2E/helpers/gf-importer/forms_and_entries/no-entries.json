@@ -1,0 +1,22 @@
+{
+    "form": {
+      "title": "No Entries",
+      "description": "This is a form with no entries.",
+      "fields": [
+        {
+          "id": 1,
+          "type": "text",
+          "label": "Full Name",
+          "isRequired": true
+        },
+        {
+          "id": 2,
+          "type": "email",
+          "label": "Email Address",
+          "isRequired": true
+        }
+      ]
+    },
+    "entries": []
+  }
+  
