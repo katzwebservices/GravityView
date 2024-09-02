@@ -168,6 +168,21 @@ async function checkViewOnFrontEnd(page, permalinkSelector = '#sample-permalink'
   await page.waitForURL(viewUrl);
 }
 
+/**
+ * Helper function to count the number of entries in a GravityView table on the front end.
+ *
+ * @param {import('playwright').Page} page - The Playwright page object.
+ * @param {string} tableSelector - The CSS selector for the table element.
+ * @returns {Promise<number>} - The number of entries in the table.
+ */
+async function countTableEntries(page, tableSelector = '.gv-table-view') {
+  await page.waitForSelector(tableSelector);
+  const rowCount = await page.$$eval(`${tableSelector} tbody tr`, rows => rows.length);
+  return rowCount;
+}
+
+
+
 
 module.exports = {
   templates,
@@ -176,4 +191,5 @@ module.exports = {
   createView,
   publishView,
   checkViewOnFrontEnd,
+  countTableEntries
 };
