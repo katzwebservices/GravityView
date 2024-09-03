@@ -1,32 +1,7 @@
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
-import { selectGravityFormByTitle, gotoAndEnsureLoggedIn } from '../../helpers/test-helpers';
-
-const url = process.env.URL;
+import { selectGravityFormByTitle, gotoAndEnsureLoggedIn, publishView, templates, checkViewOnFrontEnd } from '../../helpers/test-helpers';
 
 test.describe('GravityView Template Selection', () => {
-  const templates = [
-    {
-      name: 'Table',
-      slug: 'default_table',
-      selector: '.gv-view-types-module:has(h5:text("Table"))',
-      container: '.gv-table-container',
-      contains: 'table.gv-table-view',
-    },
-    {
-      name: 'List',
-      slug: 'default_list',
-      selector: '.gv-view-types-module:has(h5:text("List"))',
-      container: '.gv-list-container',
-      contains: 'ul.gv-list-view',
-    },
-    {
-      name: 'DataTables Table',
-      slug: 'datatables_table',
-      selector: '.gv-view-types-module:has(h5:text("DataTables Table"))',
-      container: '.gv-datatables-container',
-      contains: 'table.dataTable',
-    },
-  ];
 
   const form = {
     filename: 'simple',
@@ -72,22 +47,11 @@ test.describe('GravityView Template Selection', () => {
       await page.waitForSelector('#gravityview_settings', { state: 'visible' });
 
       const checkbox = page.locator('#gravityview_se_show_only_approved');
-
       await checkbox.isVisible() && checkbox.uncheck();
 
-      await Promise.all([
-        page.click('#publish'),
-        page.waitForURL(/\/wp-admin\/post\.php\?post=\d+&action=edit/),
-      ]);
+      await publishView(page);
+      await checkViewOnFrontEnd(page);
 
-      await page.waitForSelector('.notice-success');
-      const successMessage = await page.textContent('.notice-success');
-      expect(successMessage).toContain('View published');
-
-      const viewUrl = await page.$eval('#sample-permalink', (el) => el.href);
-      await page.goto(viewUrl);
-
-      await page.waitForURL(viewUrl);
       const containerExists = await page.locator(template.container).isVisible();
       expect(containerExists).toBeTruthy();
 
