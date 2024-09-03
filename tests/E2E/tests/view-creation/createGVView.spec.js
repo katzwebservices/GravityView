@@ -1,7 +1,9 @@
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 import {
+  createView,
   gotoAndEnsureLoggedIn,
-  selectGravityFormByTitle,
+  publishView,
+  templates,
 } from '../../helpers/test-helpers';
 
 const url = process.env.URL;
@@ -9,28 +11,15 @@ const url = process.env.URL;
 test.describe('GravityView View Creation', () => {
   test('Create a new GravityView view', async ({ page }, testInfo) => {
     await gotoAndEnsureLoggedIn(page, testInfo);
-    await page.waitForSelector('text=New View', { state: 'visible' });
-    await page.click('text=New View');
 
-    const form = {
-      filename: 'simple',
-      title: 'A Simple Form',
-    };
+    await createView(page, {formTitle: 'A Simple Form', viewName: 'Test View', template: templates[0]});
 
-    await selectGravityFormByTitle(page, form.title);
-
-    await page.fill('#title', 'Test View');
-    await page.click('#publish');
-
-    await page.waitForSelector('.notice-success');
-    const successMessage = await page.textContent('.notice-success');
-    expect(successMessage).toContain('View published');
+    await publishView(page);
   });
 
-  test('Add fields to a GravityView view', async ({ page }, testInfo) => {
+  test('Add fields to a GravityView View', async ({ page }, testInfo) => {
     await gotoAndEnsureLoggedIn(page, testInfo);
     const viewSelector = 'a.row-title:has-text("Test View")';
-
     await page.click(viewSelector);
 
     await Promise.race([
@@ -55,14 +44,7 @@ test.describe('GravityView View Creation', () => {
       await selectButtonLocator.waitFor({ state: 'visible' });
       await selectButtonLocator.click();
 
-      await Promise.all([
-        page.click('#publish'),
-        page.waitForURL(/\/wp-admin\/post\.php\?post=\d+&action=edit/),
-      ]);
-
-      await page.waitForSelector('.notice-success');
-      const successMessage = await page.textContent('.notice-success');
-      expect(successMessage).toContain('View updated');
+      await publishView(page);
     }
 
     await page.waitForSelector('.gv-fields');
