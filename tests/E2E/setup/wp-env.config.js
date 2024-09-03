@@ -11,7 +11,7 @@ const localConfigPath = path.join(__dirname, '.local-plugins.json');
 const localPlugins = getLocalPlugins(localConfigPath);
 
 const wpEnvConfig = {
-  phpVersion: '7.2',
+  phpVersion: '7.4',
   plugins: [
     '../../..',
     process.env.GRAVITY_FORMS_FOLDER || '/tmp/gravityforms',
