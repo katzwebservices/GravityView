@@ -15,7 +15,7 @@ test('Verify Redirect After Deleting', async ({ page }, testInfo) => {
     await page.locator('.gv-table-view tbody tr:nth-child(1)').getByRole('link').click();
     await page.getByRole('link', { name: 'Edit Entry' }).click();
     page.on('dialog', dialog => dialog.accept());
-    await page.getByRole('link', { name: 'Delete' }).click();
+    await page.getByRole('link', { name: 'Delete', exact: true }).click();
     await page.waitForURL(customURL);
     expect(page.url()).toBe(customURL);
 });
