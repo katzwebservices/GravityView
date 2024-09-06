@@ -166,6 +166,9 @@ async function checkViewOnFrontEnd(page, permalinkSelector = '#sample-permalink'
   await page.goto(viewUrl);
 
   await page.waitForURL(viewUrl);
+
+  await page.waitForLoadState('networkidle');
+
 }
 
 /**
@@ -176,7 +179,7 @@ async function checkViewOnFrontEnd(page, permalinkSelector = '#sample-permalink'
  * @returns {Promise<number>} - The number of entries in the table.
  */
 async function countTableEntries(page, tableSelector = '.gv-table-view') {
-  await page.waitForSelector(tableSelector);
+  await page.waitForSelector(tableSelector, {state: 'visible'});
   const rowCount = await page.$$eval(`${tableSelector} tbody tr`, rows => rows.length);
   return rowCount;
 }
