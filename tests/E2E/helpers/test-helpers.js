@@ -147,7 +147,7 @@ async function createView(page, { formTitle, viewName, template }) {
 async function publishView(page) {
   await Promise.all([
       page.click('#publish'),
-      page.waitForURL(/\/wp-admin\/post\.php\?post=\d+&action=edit/)
+      page.waitForURL(/\/wp-admin\/post(?:\-new)?\.php(?:\?[^#]*)?$/)
   ]);
 
   await page.waitForSelector('.notice-success');
