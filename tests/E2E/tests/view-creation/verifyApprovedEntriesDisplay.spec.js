@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { gotoAndEnsureLoggedIn, selectGravityFormByTitle } from '../../helpers/test-helpers';
+import { checkViewOnFrontEnd, gotoAndEnsureLoggedIn, selectGravityFormByTitle } from '../../helpers/test-helpers';
 
 test('Verify Approved Entries Display', async ({ page }, testInfo) => {
     await gotoAndEnsureLoggedIn(page, testInfo);
@@ -36,7 +36,7 @@ test('Verify Approved Entries Display', async ({ page }, testInfo) => {
 
     await Promise.all([
         page.click('#publish'),
-        page.waitForURL(/\/wp-admin\/post\.php\?post=\d+&action=edit/),
+        page.waitForURL(/\/wp-admin\/post(?:\-new)?\.php(?:\?[^#]*)?$/),
     ]);
 
     await page.waitForSelector('.notice-success');
@@ -44,7 +44,6 @@ test('Verify Approved Entries Display', async ({ page }, testInfo) => {
     expect(successMessage).toContain('View published. View on website.');
 
 
-    const viewUrl = await page.$eval('#sample-permalink', (el) => el.href);
-    await page.goto(viewUrl);
+    await checkViewOnFrontEnd(page);
     await expect(page.getByRole('img', { name: 'Show only approved entries' })).toBeVisible();
 });
