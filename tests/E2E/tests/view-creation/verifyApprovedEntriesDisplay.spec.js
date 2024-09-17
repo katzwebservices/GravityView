@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { checkViewOnFrontEnd, gotoAndEnsureLoggedIn, selectGravityFormByTitle } from '../../helpers/test-helpers';
+import { checkViewOnFrontEnd, gotoAndEnsureLoggedIn, publishView, selectGravityFormByTitle } from '../../helpers/test-helpers';
 
 test('Verify Approved Entries Display', async ({ page }, testInfo) => {
     await gotoAndEnsureLoggedIn(page, testInfo);
@@ -33,17 +33,8 @@ test('Verify Approved Entries Display', async ({ page }, testInfo) => {
     );
     await selectButtonLocator.waitFor({ state: 'visible' });
     await selectButtonLocator.click();
-
-    await Promise.all([
-        page.click('#publish'),
-        page.waitForURL(/\/wp-admin\/post(?:\-new)?\.php(?:\?[^#]*)?$/),
-    ]);
-
-    await page.waitForSelector('.notice-success');
-    const successMessage = await page.textContent('.notice-success');
-    expect(successMessage).toContain('View published. View on website.');
-
-
+    await page.waitForSelector('#gv-view-configuration-tabs', { state: 'visible' });
+    await publishView(page);
     await checkViewOnFrontEnd(page);
     await expect(page.getByRole('img', { name: 'Show only approved entries' })).toBeVisible();
 });
