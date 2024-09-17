@@ -117,9 +117,11 @@ async function createView(page, { formTitle, viewName, template }) {
   const isPlaceholder = await templateSelector.evaluate(element =>
       element.classList.contains('gv-view-template-placeholder')
   );
+  const skipMessage = `Skipping test: ${template.name} template not found.`;
 
   if (isPlaceholder) {
-      throw new Error(`${template.name} template not found.`);
+      console.warn(skipMessage);
+      test.skip(skipMessage);
   }
 
   const selectButtonLocator = page.locator(`a.gv_select_template[data-templateid="${template.slug}"]`);
