@@ -145,6 +145,7 @@ async function createView(page, { formTitle, viewName, template }) {
  * @param {import('playwright').Page} page - The Playwright page object.
  */
 async function publishView(page) {
+  await page.locator('#publish:not(.disabled)').waitFor();
   await Promise.all([
       page.click('#publish'),
       page.waitForURL(/\/wp-admin\/post(?:\-new)?\.php(?:\?[^#]*)?$/)
