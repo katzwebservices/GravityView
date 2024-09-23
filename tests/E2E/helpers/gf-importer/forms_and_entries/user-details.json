@@ -1,0 +1,90 @@
+{
+  "form": {
+    "title": "User Details",
+    "description": "This form collects various user details.",
+    "button": {
+      "type": "text",
+      "text": "Submit",
+      "imageUrl": ""
+    },
+    "fields": [
+      {
+        "id": 1,
+        "type": "text",
+        "label": "Full Name",
+        "isRequired": true
+      },
+      {
+        "id": 2,
+        "type": "email",
+        "label": "Email Address",
+        "isRequired": true
+      },
+      {
+        "id": 3,
+        "type": "number",
+        "label": "Age",
+        "isRequired": true
+      },
+      {
+        "id": 4,
+        "type": "date",
+        "label": "Date of Birth",
+        "isRequired": true
+      },
+      {
+        "id": 5,
+        "type": "radio",
+        "label": "Gender",
+        "choices": [
+          {
+            "text": "Male",
+            "value": "male"
+          },
+          {
+            "text": "Female",
+            "value": "female"
+          }
+        ],
+        "isRequired": true
+      }
+    ]
+  },
+  "entries": [
+    {
+      "1": "Alice Smith",
+      "2": "alice@example.com",
+      "3": "30",
+      "4": "1994-06-15",
+      "5": "female"
+    },
+    {
+      "1": "Bob Johnson",
+      "2": "bob@example.com",
+      "3": "45",
+      "4": "1979-08-22",
+      "5": "male"
+    },
+    {
+      "1": "Charlie Lee",
+      "2": "charlie@example.com",
+      "3": "29",
+      "4": "1995-03-12",
+      "5": "male"
+    },
+    {
+      "1": "David Brown",
+      "2": "david@example.com",
+      "3": "40",
+      "4": "1983-01-07",
+      "5": "male"
+    },
+    {
+      "1": "Eve White",
+      "2": "eve@example.com",
+      "3": "35",
+      "4": "1988-12-05",
+      "5": "female"
+    }
+  ]
+}
