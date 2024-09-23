@@ -2,6 +2,11 @@
   "form": {
     "title": "Sample Form",
     "description": "This is a sample form.",
+    "button": {
+      "type": "text",
+      "text": "Submit",
+      "imageUrl": ""
+    },
     "fields": [
       {
         "id": 1,

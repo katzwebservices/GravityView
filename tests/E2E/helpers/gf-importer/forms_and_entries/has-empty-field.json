@@ -1,35 +1,39 @@
 {
-    "form": {
-      "title": "Has Empty Field",
-      "description": "This is a custom form with two fields.",
-      "fields": [
-        {
-          "id": 1,
-          "type": "text",
-          "label": "Full Name",
-          "isRequired": true
-        },
-        {
-          "id": 2,
-          "type": "email",
-          "label": "",
-          "isRequired": true
-        }
-      ]
+  "form": {
+    "title": "Has Empty Field",
+    "description": "This is a custom form with two fields.",
+    "button": {
+      "type": "text",
+      "text": "Submit",
+      "imageUrl": ""
     },
-    "entries": [
+    "fields": [
       {
-        "1": "Alice Wonderland",
-        "2": ""
+        "id": 1,
+        "type": "text",
+        "label": "Full Name",
+        "isRequired": true
       },
       {
-        "1": "Bob Builder",
-        "2": ""
-      },
-      {
-        "1": "Charlie Chaplin",
-        "2": ""
+        "id": 2,
+        "type": "email",
+        "label": "",
+        "isRequired": true
       }
     ]
-  }
-  
+  },
+  "entries": [
+    {
+      "1": "Alice Wonderland",
+      "2": ""
+    },
+    {
+      "1": "Bob Builder",
+      "2": ""
+    },
+    {
+      "1": "Charlie Chaplin",
+      "2": ""
+    }
+  ]
+}
