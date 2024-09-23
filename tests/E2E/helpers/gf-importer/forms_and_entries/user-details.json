@@ -1,7 +1,7 @@
 {
   "form": {
     "title": "User Details",
-    "description": "This form collects various user details.",
+    "description": "This form collects information about users, including their name, email, and other details.",
     "button": {
       "type": "text",
       "text": "Submit",
@@ -30,23 +30,36 @@
         "id": 4,
         "type": "date",
         "label": "Date of Birth",
-        "isRequired": true
+        "isRequired": true,
+        "dateFormat": "MM/DD/YYYY"
       },
       {
         "id": 5,
-        "type": "radio",
-        "label": "Gender",
+        "type": "select",
+        "label": "Favorite Color",
+        "isRequired": true,
         "choices": [
           {
-            "text": "Male",
-            "value": "male"
+            "text": "Red",
+            "value": "red"
           },
           {
-            "text": "Female",
-            "value": "female"
+            "text": "Blue",
+            "value": "blue"
+          },
+          {
+            "text": "Green",
+            "value": "green"
+          },
+          {
+            "text": "Yellow",
+            "value": "yellow"
+          },
+          {
+            "text": "Purple",
+            "value": "purple"
           }
-        ],
-        "isRequired": true
+        ]
       }
     ]
   },
@@ -56,35 +69,35 @@
       "2": "alice@example.com",
       "3": "30",
       "4": "1994-06-15",
-      "5": "female"
+      "5": "Red"
     },
     {
       "1": "Bob Johnson",
       "2": "bob@example.com",
       "3": "45",
       "4": "1979-08-22",
-      "5": "male"
+      "5": "Blue"
     },
     {
-      "1": "Charlie Lee",
+      "1": "Charlie Brown",
       "2": "charlie@example.com",
-      "3": "29",
-      "4": "1995-03-12",
-      "5": "male"
+      "3": "22",
+      "4": "2001-11-30",
+      "5": "Green"
     },
     {
-      "1": "David Brown",
+      "1": "David White",
       "2": "david@example.com",
-      "3": "40",
-      "4": "1983-01-07",
-      "5": "male"
+      "3": "35",
+      "4": "1989-02-14",
+      "5": "Yellow"
     },
     {
-      "1": "Eve White",
+      "1": "Eve Black",
       "2": "eve@example.com",
-      "3": "35",
-      "4": "1988-12-05",
-      "5": "female"
+      "3": "28",
+      "4": "1995-07-09",
+      "5": "Purple"
     }
   ]
 }
