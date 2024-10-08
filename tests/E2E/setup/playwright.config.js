@@ -4,7 +4,7 @@ const { defineConfig, devices } = require( '@playwright/test' );
 require( 'dotenv' ).config( { path: `${ process.env.INIT_CWD }/.env` } );
 
 module.exports = defineConfig( {
-	testDir: path.resolve( __dirname, '..' ),
+	testDir: process.env.TEST_DIR || path.resolve( __dirname, '..' ),
 	outputDir: path.resolve( __dirname, '../results' ),
 	snapshotPathTemplate:
 		'{testDir}/snapshots/{testFileDir}/{testName}-snapshots/{arg}{ext}',
