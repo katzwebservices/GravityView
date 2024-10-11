@@ -11,9 +11,8 @@ function gf_import_forms_or_entries() {
 
         if ($command === 'import_forms_and_entries') {
             gf_import_forms_and_entries();
-        } else {
-            WP_CLI::error('Invalid command. Use "import_forms_and_entries".');
         }
+        
         exit;
     }
 
