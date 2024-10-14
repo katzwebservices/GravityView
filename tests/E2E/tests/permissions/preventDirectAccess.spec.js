@@ -8,7 +8,7 @@ test('Verify Prevent Direct Access', async ({ browser }, testInfo) => {
     await createView(page, { formTitle: 'Favorite Color', viewName: 'Verify Prevent Direct Access Test', template: templates[0] });
     await page.locator('#gravityview_settings div').getByRole('link', { name: 'Permissions' }).click();
     await page.getByLabel('Prevent Direct Access').setChecked(true);
-    const viewUrl = await page.locator('#sample-permalink a').getAttribute('href');
+    const viewUrl = await page.locator('#sample-permalink').getAttribute('href');
     await publishView(page);
     const loggedOutContext = await browser.newContext({ storageState: {} });
     const loggedOutPage = await loggedOutContext.newPage();
