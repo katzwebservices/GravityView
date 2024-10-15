@@ -1,6 +1,6 @@
 {
     "form": {
-        "title": "A simple Form",
+        "title": "A Simple Form",
         "description": "This form is used to collect basic information.",
         "button": {
             "type": "text",
