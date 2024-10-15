@@ -3,7 +3,7 @@ import { checkViewOnFrontEnd, createView, gotoAndEnsureLoggedIn, publishView, te
 
 test('Verify Lightbox Functionality for Images', async ({ page }, testInfo) => {
     await gotoAndEnsureLoggedIn(page, testInfo);
-    await createView(page, { formTitle: 'Complete', viewName: 'Image Lightbox Test', template: templates[0] });
+    await createView(page, { formTitle: 'Weather Form', viewName: 'Image Lightbox Test', template: templates[0] });
     await page.getByLabel('Show only approved entries').setChecked(false);
     await publishView(page);
     await checkViewOnFrontEnd(page);
