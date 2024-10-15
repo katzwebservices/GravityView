@@ -163,7 +163,7 @@ async function publishView(page) {
  * @param {import('playwright').Page} page - The Playwright page object.
  * @param {string} permalinkSelector - The CSS selector for the permalink element.
  */
-async function checkViewOnFrontEnd(page, permalinkSelector = '#sample-permalink') {
+async function checkViewOnFrontEnd(page, permalinkSelector = '#sample-permalink a') {
   const viewUrl = await page.locator(permalinkSelector).getAttribute('href');
   await page.goto(viewUrl);
   await page.waitForURL(viewUrl);
