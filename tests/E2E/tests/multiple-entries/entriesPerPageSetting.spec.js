@@ -41,9 +41,13 @@ test.describe('GravityView - Number of entries per page', () => {
                 await page.locator('#gravityview_settings div').getByRole('link', { name: 'Multiple Entries' }).click();
 
                 await page.getByLabel('Number of entries per page').fill(entriesPerPage.toString());
+
+                if ('DataTables Table' === template.name) {
+                    await page.locator('#gravityview_settings div').getByRole('link', { name: 'DataTables' }).click();
+                    await page.getByLabel('Save Table State').setChecked(false);
+                }
                 
                 await publishView(page);
-                
                 await checkViewOnFrontEnd(page);
 
                 if (entriesPerPage > 0) {
