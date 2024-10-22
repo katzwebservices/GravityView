@@ -183,6 +183,39 @@ async function countTableEntries(page, tableSelector = '.gv-table-view') {
   return rowCount;
 }
 
+/**
+ * Helper function to create a download button and click it.
+ * @param {Page} page - The Playwright page instance.
+ * @param {string} downloadUrl - The URL to download from.
+ * @param {string} buttonId - A unique ID for the download button.
+ */
+async function clickDownloadButton(page, downloadUrl, buttonId = 'download-button') {
+  const result = await page.evaluate(({ url, id }) => {
+      try {
+          const button = document.createElement('button');
+          button.innerText = 'Download';
+          button.id = id;
+          button.onclick = () => {
+              window.location.href = url;
+          };
+          document.body.appendChild(button);
+          return { success: true, message: 'Button appended successfully.' };
+      } catch (error) {
+          return { success: false, message: error.message };
+      }
+  }, { url: downloadUrl, id: buttonId });
+
+  if (!result.success) {
+      throw new Error(`Failed to create button: ${result.message}`);
+  }
+
+  const downloadButton = await page.waitForSelector(`#${buttonId}`, {
+      state: 'visible',
+  });
+
+  await downloadButton.click();
+}
+
 
 
 
@@ -193,5 +226,6 @@ module.exports = {
   createView,
   publishView,
   checkViewOnFrontEnd,
-  countTableEntries
+  countTableEntries,
+  clickDownloadButton
 };
