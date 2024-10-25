@@ -216,7 +216,38 @@ async function clickDownloadButton(page, downloadUrl, buttonId = 'download-butto
   await downloadButton.click();
 }
 
+/**
+ * Creates a new WordPress page, inserts a shortcode block, publishes the page, 
+ * and returns the URL of the published page.
+ *
+ * @param {object} page - The Playwright `page` object used to interact with the browser.
+ * @param {object} options - Options for creating the page.
+ * @param {string} options.shortcode - The shortcode to insert into the page.
+ * @param {string} options.title - The title of the page to create.
+ * 
+ * @returns {Promise<string>} - The URL of the published page.
+ *
+ * @example
+ * const url = await createPageWithShortcode(page, { shortcode: 'your_shortcode_here', title: 'My Page Title' });
+ * console.log('Published page URL:', url);
+ */
+async function createPageWithShortcode(page, { shortcode, title }) {
+  await page.goto(`${url}/wp-admin/post-new.php?post_type=page`);
 
+  await page.locator('.wp-block-post-title').fill(title);
+
+  await page.click('.components-dropdown.block-editor-inserter');
+  await page.fill('input[placeholder="Search"]', 'Shortcode');
+  await page.click('.components-popover .editor-block-list-item-shortcode');
+
+  await page.locator('div.wp-block-shortcode textarea').fill(`[${shortcode}]`);
+  await page.click('button.editor-post-publish-panel__toggle');
+  await page.click('button.editor-post-publish-button');
+  await page.waitForSelector('input.components-text-control__input');
+
+  const pageUrl = await page.getAttribute('input.components-text-control__input', 'value');
+  return pageUrl;
+}
 
 
 module.exports = {
@@ -227,5 +258,6 @@ module.exports = {
   publishView,
   checkViewOnFrontEnd,
   countTableEntries,
-  clickDownloadButton
+  clickDownloadButton,
+  createPageWithShortcode
 };
