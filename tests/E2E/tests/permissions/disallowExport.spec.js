@@ -10,7 +10,6 @@ import {
 
 test('Verify Disallow Export', async ({ page }, testInfo) => {
 	let noDownload = true;
-
 	page.on('download', (download) => {
 		noDownload = false;
 	});
@@ -27,11 +26,5 @@ test('Verify Disallow Export', async ({ page }, testInfo) => {
 	const downloadUrl = `${viewUrl}csv/`;
 	await checkViewOnFrontEnd(page);
 	await clickDownloadButton(page, downloadUrl);
-	console.log('Yello');
-	console.log('Cold Play');
-	console.log("<a href='#'>Roof</a>");
-
 	expect(noDownload).toBe(true);
-	console.log('NEw');
-	console.log('fresh');
 });
