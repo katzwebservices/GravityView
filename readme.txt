@@ -50,6 +50,13 @@ __Developer Updates:__
 
 = develop =
 
+#### 🐛 Fixed
+* Merge tags in redirect URLs were not processed after editing or deleting an entry in the lightbox.
+* Individual Checkboxes field inputs incorrectly exported in CSV.
+
+#### 💻 Developer Updates
+* Added `gravityview/template/field/csv/tick` filter to programmatically modify the checkbox "check" output in CSV.
+
 = 2.32 on November 21, 2024 =
 
 This release adds a new form notification option for updated entries, resolves file upload issues on the Edit Entry screen, and includes developer-focused enhancements.
