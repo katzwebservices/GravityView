@@ -2029,6 +2029,8 @@
 				   var templateId = $( '#gravityview_directory_template' ).val();
 
 				   switch ( $( this ).attr( 'data-objecttype' ) ) {
+					   case 'search':
+						   context = 'search';
 					   case 'field':
 						   // If in Single context, show fields available in single
 						   // If it Directory, same for directory
@@ -2578,10 +2580,10 @@
 			   revert: 75,
 			   connectWith: ".active-drop-field",
 			   start: function( event, ui ) {
-				   $( panel ).find( ".active-drop-container-field" ).addClass('is-receivable');
+				   $( document.body ).find( ".active-drop-container-field" ).addClass('is-receivable');
 			   },
 			   stop: function( event, ui ) {
-				   $( panel ).find( ".active-drop-container-field" ).removeClass('is-receivable');
+				   $( document.body ).find( ".active-drop-container-field" ).removeClass('is-receivable');
 			   },
 			   change: function( event, ui ) {
 				   vcfg.setUnsavedChanges( true );
@@ -2602,6 +2604,39 @@
 				   vcfg.toggleDropMessage();
 			   }
 		   } );
+
+		   // Search fields.
+		   $( panel ).find( ".active-drop-search" ).sortable( {
+			   placeholder: "fields-placeholder",
+			   items: '> .gv-fields',
+			   distance: 2,
+			   revert: 75,
+			   connectWith: ".active-drop-search",
+			   start: function( event, ui ) {
+				   $( document.body ).find( ".active-drop-container-search" ).addClass('is-receivable');
+			   },
+			   stop: function( event, ui ) {
+				   $( document.body ).find( ".active-drop-container-search" ).removeClass('is-receivable');
+			   },
+			   change: function( event, ui ) {
+				   vcfg.setUnsavedChanges( true );
+			   },
+			   receive: function ( event, ui ) {
+				   // Check if field comes from another active area and if so, update name attributes.
+				   if ( ui.item.find( ".gv-dialog-options" ).length > 0 ) {
+
+					   var sender_area = ui.sender.attr( 'data-areaid' ), receiver_area = $( this ).attr( 'data-areaid' );
+
+					   ui.item.find( '[name^="searchs[' + sender_area + ']"]' ).each( function () {
+						   var name = $( this ).attr( 'name' );
+						   $( this ).attr( 'name', name.replace( sender_area, receiver_area ) );
+					   } );
+
+				   }
+
+				   vcfg.toggleDropMessage();
+			   }
+		   } )
 	   },
 
 	   toggleDropMessage: function () {
@@ -2696,6 +2731,11 @@
 		*/
 	   openFieldSettings: function ( e ) {
 		   e.preventDefault();
+
+		   // Don't open a dialog for search field settings.
+		   if ( $( e.currentTarget ).closest( '#search-active-fields' ).length ) {
+			   return;
+		   }
 
 		   var parent, vcfg = viewConfiguration;
 
