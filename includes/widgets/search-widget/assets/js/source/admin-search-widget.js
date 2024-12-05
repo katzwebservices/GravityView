@@ -20,6 +20,8 @@
 		// holds the current widget settings DOM object
 		widgetTarget: $( '.gv-dialog-options' ),
 
+		searchModal: null,
+
 		selectFields: null,
 
 		wp_widget_id: 'gravityview_search',
@@ -37,6 +39,7 @@
 
 				// [View] hook on all the open settings buttons for search_bar widget
 				.on( 'dialogopen', '[data-fieldid="search_bar"] .' + wrapClass, gvSearchWidget.openDialog )
+				.on( 'dialogclose dialogdestroy', '[data-fieldid="search_bar"] .' + wrapClass, gvSearchWidget.closeDialog )
 
 				// [WP widget] When opening the WP widget settings, trigger the search fields table
 				.bind( 'click.widgets-toggle', gvSearchWidget.openWidget )
@@ -80,7 +83,6 @@
 			gvSearchWidget.widgetTarget = obj.closest( 'div.widget' ).find( 'div.' + gvSearchWidget.wrapClass );
 			// reset fields to the exist appended to the table (if none, it gets undefined)
 			gvSearchWidget.selectFields = null;
-
 		},
 
 		/**
@@ -136,8 +138,47 @@
 		 */
 		openDialog: function ( e ) {
 			e.preventDefault();
+
+			// Remove ui-front to add field dialogs to <body>, fixing their appearance.
+			$( this ).closest( '[role="dialog"]' ).removeClass( 'ui-front' );
+
 			gvSearchWidget.widgetTarget = $( this );
-			gvSearchWidget.renderUI( $( this ).parents( '.gv-fields' ) );
+			if ( !gvSearchWidget.searchModal ) {
+				gvSearchWidget.searchModal = $( '#search-view' );
+			}
+
+			// Add to the end of the stack so the content is in the modal.
+			setTimeout( () => {
+				const $sortables = gvSearchWidget.searchModal.find( '.active-drop-search' );
+
+				// Sortable needs to be reinitialized when the modal opens.
+				$sortables.each( ( _, el ) => {
+					const sortable = $( el ).sortable( 'instance' );
+					sortable && sortable.destroy(); // Remove sorting if it is active.
+				} );
+
+				gvAdminActions.initDroppables( gvSearchWidget.searchModal ); // Add sorting (back).
+			} );
+
+			if ( gvSearchWidget.searchModal ) {
+				gvSearchWidget.searchModal.attr( 'aria-hidden', 'false' );
+				gvSearchWidget.searchModal.appendTo( $( this ).find( '[data-search-fields]' ) );
+			}
+		},
+
+		/**
+		 * [Specific for View Search Widget]
+		 * Capture the widget dialog and call to render the widget settings content
+		 * @param  {jQuery} e event
+		 */
+		closeDialog: function ( e ) {
+			e.preventDefault();
+
+			gvSearchWidget.widgetTarget = $( this );
+			if ( gvSearchWidget.searchModal ) {
+				gvSearchWidget.searchModal.attr( 'aria-hidden', 'true' );
+				gvSearchWidget.searchModal.appendTo( $( '#gv-view-configuration-tabs' ) );
+			}
 		},
 
 		/** Table manipulation */
@@ -657,7 +698,7 @@
 				widgetTarget = e.target ? $( e.target ).parents( '.gv-widget-search-fields, .gv-fields' ) : e.parents( '.gv-widget-search-fields, .gv-fields' );
 				// If one of the search fields uses a "date range", the search mode option input fields become disabled.
 				// In order to pass the selected search mode option to the server, we need to enable the checked input field.
-				$( '.gv-setting-container-search_mode' ).find( 'input:checked:disabled' ).prop('disabled', false);
+				$( '.gv-setting-container-search_mode' ).find( 'input:checked:disabled' ).prop( 'disabled', false );
 			} else {
 				widgetTarget = gvSearchWidget.widgetTarget;
 			}
