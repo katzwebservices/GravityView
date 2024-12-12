@@ -1,6 +1,9 @@
 import { test, expect } from '@playwright/test';
 import { createView, gotoAndEnsureLoggedIn, publishView, templates } from '../../helpers/test-helpers';
 
+/**
+ * Ensures REST API access is disabled when 'Allow REST Access' is unchecked.
+ */
 test('Verify Allow Rest Access Unchecked', async ({ page }, testInfo) => {
     await gotoAndEnsureLoggedIn(page, testInfo);
     await createView(page, { formTitle: 'Favorite Color', viewName: 'Verify Allow Rest Access Unchecked Test', template: templates[0] });

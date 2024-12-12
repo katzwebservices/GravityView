@@ -7,6 +7,9 @@ import {
 	templates,
 } from '../../helpers/test-helpers';
 
+/**
+ * Ensures a View without a valid secret shows an error message.
+ */
 test('Verify Ehanced Security', async ({ page }, testInfo) => {
 	await gotoAndEnsureLoggedIn(page, testInfo);
 	await createView(page, {

@@ -1,6 +1,9 @@
 import { test, expect } from '@playwright/test';
 import { createView, gotoAndEnsureLoggedIn, publishView, templates } from '../../helpers/test-helpers';
 
+/**
+ * Verifies that REST API access is enabled when 'Allow REST Access' is checked.
+ */
 test('Verify Allow Rest Access Checked', async ({ page }, testInfo) => {
     await gotoAndEnsureLoggedIn(page, testInfo);
     await createView(page, { formTitle: 'Favorite Color', viewName: 'Verify Allow Rest Access Checked Test', template: templates[0] });

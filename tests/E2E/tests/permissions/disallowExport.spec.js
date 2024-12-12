@@ -8,6 +8,9 @@ import {
 	templates,
 } from '../../helpers/test-helpers';
 
+/**
+ * Confirms entry downloads don’t work when 'Allow Export' setting is disabled.
+ */
 test('Verify Disallow Export', async ({ page }, testInfo) => {
 	let noDownload = true;
 	page.on('download', (download) => {

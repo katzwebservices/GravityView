@@ -1,6 +1,9 @@
 import { test, expect } from '@playwright/test';
 import { checkViewOnFrontEnd, clickDownloadButton, createView, gotoAndEnsureLoggedIn, publishView, templates } from '../../helpers/test-helpers';
 
+/**
+ * Verifies the "Allow Export" setting enables entry downloads successfully.
+ */
 test('Verify Allow Export', async ({ page }, testInfo) => {
 
     let success = false;
@@ -20,5 +23,4 @@ test('Verify Allow Export', async ({ page }, testInfo) => {
     await checkViewOnFrontEnd(page);
     await clickDownloadButton(page, downloadUrl);
     expect(success).toBe(true);
-
 });

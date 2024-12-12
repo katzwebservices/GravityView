@@ -1,6 +1,9 @@
 import { test, expect } from '@playwright/test';
 import { createView, gotoAndEnsureLoggedIn, publishView, templates } from '../../helpers/test-helpers';
 
+/**
+ * Confirms direct URL access to the View is blocked when permissions restrict it.
+ */
 test('Verify Prevent Direct Access', async ({ browser }, testInfo) => {
     const loggedInContext = await browser.newContext();
     const page = await loggedInContext.newPage();
