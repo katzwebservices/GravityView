@@ -1,6 +1,9 @@
 import { test, expect } from '@playwright/test';
 import { checkViewOnFrontEnd, createView, gotoAndEnsureLoggedIn, publishView, templates } from '../../helpers/test-helpers';
 
+/**
+ * Checks that the lightbox functionality for images works as expected.
+ */
 test('Verify Lightbox Functionality for Images', async ({ page }, testInfo) => {
     await gotoAndEnsureLoggedIn(page, testInfo);
     await createView(page, { formTitle: 'Weather Form', viewName: 'Image Lightbox Test', template: templates[0] });

@@ -8,6 +8,9 @@ import {
 
 const url = process.env.URL;
 
+/**
+ * Tests the process of creating a new GravityView View.
+ */
 test.describe('GravityView View Creation', () => {
   test('Create a new GravityView view', async ({ page }, testInfo) => {
     await gotoAndEnsureLoggedIn(page, testInfo);

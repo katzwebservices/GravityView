@@ -6,6 +6,9 @@ import {
 	selectGravityFormByTitle,
 } from "../../helpers/test-helpers";
 
+/**
+ * Verifies that admins can see all entries when the checkbox is enabled.
+ */
 test("Verify Admins Can See All Entries Regardless of Approval Status", async ({
 	page,
 }, testInfo) => {

@@ -6,6 +6,9 @@ import {
 	selectGravityFormByTitle,
 } from "../../helpers/test-helpers";
 
+/**
+ * Ensures only approved entries are displayed on the front end.
+ */
 test("Verify Approved Entries Display", async ({ page }, testInfo) => {
 	await gotoAndEnsureLoggedIn(page, testInfo);
 	await page.getByText("Add New View", { exact: true }).click();
