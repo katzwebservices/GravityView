@@ -1,6 +1,9 @@
 import { test, expect } from '@playwright/test';
 import { checkViewOnFrontEnd, createView, gotoAndEnsureLoggedIn, publishView, templates } from '../../helpers/test-helpers';
 
+/**
+ * Verifies empty fields are hidden with 'Hide Empty Fields' enabled.
+ */
 test('Verify Hide Empty Fields Setting (Single)', async ({ page }, testInfo) => {
     await gotoAndEnsureLoggedIn(page, testInfo);
     await createView(page, { formTitle: 'Favorite Book', viewName: 'Hide Empty Fields Setting Test (Single)', template: templates[1] });
