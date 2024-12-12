@@ -1,6 +1,9 @@
 import { test, expect } from '@playwright/test';
 import { checkViewOnFrontEnd, createView, gotoAndEnsureLoggedIn, publishView, templates } from '../../helpers/test-helpers';
 
+/**
+ * Verifies that custom JavaScript code is executed correctly and affects the behavior of the front-end view as intended.
+ */
 test('Verify Redirect After Deleting', async ({ page }, testInfo) => {
     await gotoAndEnsureLoggedIn(page, testInfo);
     await createView(page, { formTitle: 'Redundant Favorite Color', viewName: 'Verify Redirect After Deleting Test', template: templates[0] });
