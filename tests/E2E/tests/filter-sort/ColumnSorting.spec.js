@@ -1,6 +1,9 @@
 import { test, expect } from '@playwright/test';
 import { checkViewOnFrontEnd, createView, gotoAndEnsureLoggedIn, publishView, templates } from '../../helpers/test-helpers';
 
+/**
+ * Verifies that column sorting is enabled and functions correctly for the selected field.
+ */
 test('Verify Column Sorting', async ({ page }, testInfo) => {
     await gotoAndEnsureLoggedIn(page, testInfo);
     await createView(page, { formTitle: 'Favorite Color', viewName: 'Verify Column Sorting Test', template: templates[0] });

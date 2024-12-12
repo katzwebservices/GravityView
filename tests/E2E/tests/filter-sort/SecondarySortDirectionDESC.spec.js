@@ -1,6 +1,9 @@
 import { test, expect } from '@playwright/test';
 import { checkViewOnFrontEnd, createView, gotoAndEnsureLoggedIn, publishView, templates } from '../../helpers/test-helpers';
 
+/**
+ * Verifies that secondary sorting in descending order works as expected.
+ */
 test('Secondary Sort Direction DESC', async ({ page }, testInfo) => {
     await gotoAndEnsureLoggedIn(page, testInfo);
     await createView(page, { formTitle: 'Pet Preference', viewName: 'Secondary Sort Direction DESC Test', template: templates[0] });

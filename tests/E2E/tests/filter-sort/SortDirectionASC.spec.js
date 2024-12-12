@@ -1,6 +1,9 @@
 import { test, expect } from '@playwright/test';
 import { checkViewOnFrontEnd, createView, gotoAndEnsureLoggedIn, publishView, templates } from '../../helpers/test-helpers';
 
+/**
+ * Ensures primary sorting in ascending order is correctly applied.
+ */
 test('Verify Sort Direction ASC', async ({ page }, testInfo) => {
     await gotoAndEnsureLoggedIn(page, testInfo);
     await createView(page, { formTitle: 'Favorite Color', viewName: 'Verify Sort Direction ASC Test', template: templates[0] });
