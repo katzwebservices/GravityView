@@ -1,6 +1,9 @@
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 import { selectGravityFormByTitle, gotoAndEnsureLoggedIn, publishView, templates, checkViewOnFrontEnd } from '../../helpers/test-helpers';
 
+/**
+ * Checks functionality of template selection in layout settings.
+ */
 test.describe('GravityView Template Selection', () => {
 
   const form = {
