@@ -1,6 +1,9 @@
 import { test, expect } from '@playwright/test';
 import { checkViewOnFrontEnd, createView, gotoAndEnsureLoggedIn, publishView, templates } from '../../helpers/test-helpers';
 
+/**
+ * Confirms the text displayed when a search yields no results.
+ */
 test('Verify No Search Results Custom Message', async ({ page }, testInfo) => {
     await gotoAndEnsureLoggedIn(page, testInfo);
     await createView(page, { formTitle: 'No Entries', viewName: 'Verify No Search Results Message Test', template: templates[0] });

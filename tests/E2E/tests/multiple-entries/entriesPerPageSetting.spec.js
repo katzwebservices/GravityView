@@ -3,6 +3,9 @@ import { checkViewOnFrontEnd, countTableEntries, createView, gotoAndEnsureLogged
 
 const filteredTemplates = templates.filter(template => template.name !== 'List');
 
+/**
+ * Tests the 'Number of entries per page' setting with various values.
+ */
 test.describe('GravityView - Number of entries per page', () => {
     let browser;
     let context;
