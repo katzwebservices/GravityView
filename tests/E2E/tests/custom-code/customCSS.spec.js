@@ -1,6 +1,9 @@
 import { test, expect } from '@playwright/test';
 import { checkViewOnFrontEnd, createView, gotoAndEnsureLoggedIn, publishView, templates } from '../../helpers/test-helpers';
 
+/**
+ * Verifies that custom CSS is applied correctly on the front end.
+ */
 test('Verify Custom CSS', async ({ page }, testInfo) => {
     await gotoAndEnsureLoggedIn(page, testInfo);
     await createView(page, { formTitle: 'Event Registration', viewName: 'Verify Custom CSS Test', template: templates[0] });

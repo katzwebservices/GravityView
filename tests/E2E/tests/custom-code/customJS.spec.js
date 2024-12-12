@@ -1,6 +1,9 @@
 import { test, expect } from '@playwright/test';
 import { checkViewOnFrontEnd, createView, gotoAndEnsureLoggedIn, publishView, templates } from '../../helpers/test-helpers';
 
+/**
+ * Verifies that custom JavaScript code is executed correctly and affects the behavior of the front-end as intended.
+ */
 test('Verify Custom JS', async ({ page }, testInfo) => {
     await gotoAndEnsureLoggedIn(page, testInfo);
     await createView(page, { formTitle: 'Event Registration', viewName: 'Verify Custom JS Test', template: templates[0] });
