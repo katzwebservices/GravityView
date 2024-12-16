@@ -11,8 +11,8 @@ import {
  * Ensures no entries are displayed when data is hidden until search.
  */
 test("Hide Data Until Search", async ({ page }, testInfo) => {
-	gotoAndEnsureLoggedIn(page, testInfo);
-	createView(page, {
+	await gotoAndEnsureLoggedIn(page, testInfo);
+	await createView(page, {
 		formTitle: "Favorite Book",
 		viewName: "Hide Data Until Search Test",
 		template: templates[0],
