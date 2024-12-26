@@ -54,6 +54,12 @@ function gf_import_forms_and_entries() {
                 if (isset($decoded_data['entries']) && is_array($decoded_data['entries'])) {
                     foreach ($decoded_data['entries'] as $entry) {
                         $entry['form_id'] = $form_id;
+
+                        if (isset($entry['submitted_on'])) {
+                            $submitted_on = $entry['submitted_on'];
+                            $entry['date_created'] = $submitted_on;
+                        }
+
                         $result = GFAPI::add_entry($entry);
 
                         if (is_wp_error($result)) {
