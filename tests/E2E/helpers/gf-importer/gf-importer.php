@@ -12,8 +12,6 @@ function gf_import_forms_or_entries() {
         if ($command === 'import_forms_and_entries') {
             gf_import_forms_and_entries();
         }
-        
-        exit;
     }
 
     if (isset($_GET['import_gf_forms_entries']) && $_GET['import_gf_forms_entries'] === 'true') {
