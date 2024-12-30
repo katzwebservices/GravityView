@@ -144,7 +144,6 @@ async function createView(
     await selectGravityFormByTitle(page, formTitle, testInfo);
   } catch (e) {
     const formMissingMessage = `The form '${formTitle}' doesn't exist.`;
-    // console.log(formMissingMessage);
     testInfo ?
       testInfo.skip(true, formMissingMessage)
       : test.skip();
