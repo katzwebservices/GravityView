@@ -6,7 +6,7 @@ import { checkViewOnFrontEnd, createView, gotoAndEnsureLoggedIn, publishView, te
  */
 test('Verify Custom CSS', async ({ page }, testInfo) => {
     await gotoAndEnsureLoggedIn(page, testInfo);
-    await createView(page, { formTitle: 'Event Registration', viewName: 'Verify Custom CSS Test', template: templates[0] });
+    await createView(page, { formTitle: 'Event Registration', viewName: 'Verify Custom CSS Test', template: templates[0] }, testInfo);
     await page.locator('#gravityview_settings div').getByRole('link', { name: 'Custom Code' }).click();
     await page.fill('#gravityview_advanced tbody tr:first-of-type .CodeMirror-activeline', 'body { background-color: #ffeb3b; }');
     await publishView(page);
