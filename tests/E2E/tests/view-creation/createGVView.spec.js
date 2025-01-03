@@ -11,16 +11,19 @@ const url = process.env.URL;
 /**
  * Tests the process of creating a new GravityView View.
  */
-test.describe('GravityView View Creation', () => {
+test.describe.serial('GravityView View Creation', () => {
+
+let firstTestSkipped = true;
+
   test('Create a new GravityView view', async ({ page }, testInfo) => {
     await gotoAndEnsureLoggedIn(page, testInfo);
-
-    await createView(page, {formTitle: 'A Simple Form', viewName: 'Test View', template: templates[0]});
-
+    await createView(page, { formTitle: 'A Simple Form', viewName: 'Test View', template: templates[0] }, testInfo);
+    firstTestSkipped = false;
     await publishView(page);
   });
 
   test('Add fields to a GravityView View', async ({ page }, testInfo) => {
+    testInfo.skip(firstTestSkipped, 'Skipping test because the first test was skipped.');
     await gotoAndEnsureLoggedIn(page, testInfo);
     const viewSelector = 'a.row-title:has-text("Test View")';
     await page.click(viewSelector);
