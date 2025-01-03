@@ -7,7 +7,7 @@ import { checkViewOnFrontEnd, createView, gotoAndEnsureLoggedIn, publishView, te
 test('Verify Hide Empty Fields Setting', async ({ page }, testInfo) => {
     await gotoAndEnsureLoggedIn(page, testInfo);
 
-    await createView(page, { formTitle: 'Favorite Book', viewName: 'Hide Empty Fields Setting Test', template: templates[1] });
+    await createView(page, { formTitle: 'Favorite Book', viewName: 'Hide Empty Fields Setting Test', template: templates[1] }, testInfo);
 
     const addFieldButton = '.gv-droppable-area[data-areaid="directory_list-title"] .gv-add-field';
 

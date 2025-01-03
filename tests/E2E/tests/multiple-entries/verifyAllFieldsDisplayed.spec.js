@@ -6,7 +6,7 @@ import { checkViewOnFrontEnd, createView, gotoAndEnsureLoggedIn, publishView, te
  */
 test('Verify All Fields Are Displayed Correctly', async ({ page }, testInfo) => {
     await gotoAndEnsureLoggedIn(page, testInfo);
-    await createView(page, { formTitle: 'User Details', viewName: 'Verify All Fields Display', template: templates[0] });
+    await createView(page, { formTitle: 'User Details', viewName: 'Verify All Fields Display', template: templates[0] }, testInfo);
     await publishView(page);
     await checkViewOnFrontEnd(page);
 

@@ -6,7 +6,7 @@ import { checkViewOnFrontEnd, createView, gotoAndEnsureLoggedIn, publishView, te
  */
 test('Verify No Entries Custom Message', async ({ page }, testInfo) => {
     await gotoAndEnsureLoggedIn(page, testInfo);
-    await createView(page, { formTitle: 'No Entries', viewName: 'Verify No Entries Message Test', template: templates[0] });
+    await createView(page, { formTitle: 'No Entries', viewName: 'Verify No Entries Message Test', template: templates[0] }, testInfo);
 
     await page.locator('#gravityview_settings div').getByRole('link', { name: 'Multiple Entries' }).click();
     const customMessage = "Empty! Even the tumbleweeds are bored.";

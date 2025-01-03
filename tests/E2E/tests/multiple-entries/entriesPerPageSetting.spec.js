@@ -23,7 +23,7 @@ test.describe('GravityView - Number of entries per page', () => {
         await browser.close();
     });
 
-    test('should correctly paginate entries for each template', async () => {
+    test('should correctly paginate entries for each template', async ({ page }, testInfo) => {
 
         test.slow();
 
@@ -34,7 +34,7 @@ test.describe('GravityView - Number of entries per page', () => {
 
             await gotoAndEnsureLoggedIn(page);
 
-            await createView(page, { formTitle, viewName, template });
+            await createView(page, { formTitle, viewName, template }, testInfo);
 
             const testCases = [30, 5, -1];
             for (const entriesPerPage of testCases) {

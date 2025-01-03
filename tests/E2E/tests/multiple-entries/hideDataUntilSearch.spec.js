@@ -16,7 +16,7 @@ test("Hide Data Until Search", async ({ page }, testInfo) => {
 		formTitle: "Favorite Book",
 		viewName: "Hide Data Until Search Test",
 		template: templates[0],
-	});
+	}, testInfo);
 	await page
 		.locator("#gravityview_settings div")
 		.getByRole("link", { name: "Multiple Entries" })

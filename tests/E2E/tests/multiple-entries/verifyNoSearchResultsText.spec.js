@@ -6,7 +6,7 @@ import { checkViewOnFrontEnd, createView, gotoAndEnsureLoggedIn, publishView, te
  */
 test('Verify No Search Results Custom Message', async ({ page }, testInfo) => {
     await gotoAndEnsureLoggedIn(page, testInfo);
-    await createView(page, { formTitle: 'No Entries', viewName: 'Verify No Search Results Message Test', template: templates[0] });
+    await createView(page, { formTitle: 'No Entries', viewName: 'Verify No Search Results Message Test', template: templates[0] }, testInfo);
 
     await page.locator('#gravityview_settings div').getByRole('link', { name: 'Multiple Entries' }).click();
     const customMessage = "Empty! Did the entries vanish into thin air?";
