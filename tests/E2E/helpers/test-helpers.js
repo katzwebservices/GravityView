@@ -208,9 +208,11 @@ async function publishView(page) {
  */
 async function checkViewOnFrontEnd(
 	page,
-	permalinkSelector = "#sample-permalink a",
+	permalinkSelector = "#sample-permalink",
 ) {
-	const viewUrl = await page.locator(permalinkSelector).getAttribute("href");
+	const viewUrl = await page.locator(`${permalinkSelector} a, ${permalinkSelector}`).evaluate((el) => {
+		return el.tagName === 'A' ? el.href : el.querySelector('a')?.href;
+	  });
 	await page.goto(viewUrl);
 	await page.waitForURL(viewUrl);
 	await page.waitForLoadState("networkidle");
