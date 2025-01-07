@@ -35,6 +35,6 @@ test("Entry Date Field", async ({ page }, testInfo) => {
 	await page.getByRole("button", { name: "Search" }).click();
 	const david = page.getByRole("cell", { name: "David", exact: true });
 	const charlie = page.getByRole("cell", { name: "Charlie", exact: true });
-	expect(david).toBeVisible();
-	expect(charlie).not.toBeVisible();
+	await expect(david).toBeVisible();
+	await expect(charlie).not.toBeVisible();
 });
