@@ -82,6 +82,10 @@ function gf_import_forms_and_entries() {
                             $entry['date_created'] = $entry['submitted_on'];
                         }
 
+                        if (isset($entry['is_starred'])) {
+                            $entry['is_starred'] = (bool) $entry['is_starred'];
+                        }
+
                         $result = GFAPI::add_entry($entry);
 
                         if (is_wp_error($result)) {
