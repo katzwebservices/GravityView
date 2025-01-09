@@ -86,6 +86,10 @@ function gf_import_forms_and_entries() {
                             $entry['is_starred'] = (bool) $entry['is_starred'];
                         }
 
+                        if (isset($entry['is_read'])) {
+                            $entry['is_read'] = (bool) $entry['is_read'];
+                        }
+
                         $result = GFAPI::add_entry($entry);
 
                         if (is_wp_error($result)) {
