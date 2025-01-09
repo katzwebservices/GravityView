@@ -318,9 +318,12 @@ async function createPageWithShortcode(page, { shortcode, title }) {
  * @returns {Promise<string | null>} - The URL as a string, or `null` if no anchor tag is found.
  */
 async function getViewUrl(page, permalinkSelector = "#sample-permalink") {
-	return await page.locator(`${permalinkSelector} a, ${permalinkSelector}`).evaluate((el) => {
-		return el.tagName === 'A' ? el.href : el.querySelector('a')?.href;
-	});
+	const element = page.locator(permalinkSelector);
+	const isAnchor = await element.evaluate((el) => el.tagName === 'A');
+	if (isAnchor) {
+		return await element.getAttribute('href');
+	}
+	return await element.locator('a').first().getAttribute('href');
 }
 
 module.exports = {
