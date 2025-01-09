@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { createView, gotoAndEnsureLoggedIn, publishView, templates } from '../../helpers/test-helpers';
+import { createView, getViewUrl, gotoAndEnsureLoggedIn, publishView, templates } from '../../helpers/test-helpers';
 
 /**
  * Confirms direct URL access to the View is blocked when permissions restrict it.
@@ -11,7 +11,7 @@ test('Verify Prevent Direct Access', async ({ browser }, testInfo) => {
     await createView(page, { formTitle: 'Favorite Color', viewName: 'Verify Prevent Direct Access Test', template: templates[0] });
     await page.locator('#gravityview_settings div').getByRole('link', { name: 'Permissions' }).click();
     await page.getByLabel('Prevent Direct Access').setChecked(true);
-    const viewUrl = await page.locator('span#sample-permalink a').getAttribute('href');
+    const viewUrl = await getViewUrl(page);
     await publishView(page);
     const loggedOutContext = await browser.newContext({ storageState: {} });
     const loggedOutPage = await loggedOutContext.newPage();

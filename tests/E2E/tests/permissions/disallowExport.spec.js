@@ -3,6 +3,7 @@ import {
 	checkViewOnFrontEnd,
 	clickDownloadButton,
 	createView,
+	getViewUrl,
 	gotoAndEnsureLoggedIn,
 	publishView,
 	templates,
@@ -23,9 +24,7 @@ test('Verify Disallow Export', async ({ page }, testInfo) => {
 		template: templates[0],
 	});
 	await publishView(page);
-	const viewUrl = await page
-		.locator('#sample-permalink a')
-		.getAttribute('href');
+	const viewUrl = await getViewUrl(page);
 	const downloadUrl = `${viewUrl}csv/`;
 	await checkViewOnFrontEnd(page);
 	await clickDownloadButton(page, downloadUrl);

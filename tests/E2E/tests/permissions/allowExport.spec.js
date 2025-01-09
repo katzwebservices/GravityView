@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { checkViewOnFrontEnd, clickDownloadButton, createView, gotoAndEnsureLoggedIn, publishView, templates } from '../../helpers/test-helpers';
+import { checkViewOnFrontEnd, clickDownloadButton, createView, getViewUrl, gotoAndEnsureLoggedIn, publishView, templates } from '../../helpers/test-helpers';
 
 /**
  * Verifies the "Allow Export" setting enables entry downloads successfully.
@@ -18,7 +18,7 @@ test('Verify Allow Export', async ({ page }, testInfo) => {
     await page.locator('#gravityview_settings div').getByRole('link', { name: 'Permissions' }).click();
     await page.getByLabel('Allow Export').setChecked(true);
     await publishView(page);
-    const viewUrl = await page.locator('#sample-permalink a').getAttribute('href');
+    const viewUrl = await getViewUrl(page);
     const downloadUrl = `${viewUrl}csv/`;
     await checkViewOnFrontEnd(page);
     await clickDownloadButton(page, downloadUrl);
