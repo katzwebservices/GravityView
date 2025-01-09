@@ -315,6 +315,19 @@ async function createPageWithShortcode(page, { shortcode, title }) {
 	return pageUrl;
 }
 
+/**
+ * Retrieves the view URL from a given permalink selector on the page.
+ *
+ * @param {import('@playwright/test').Page} page - The Playwright page object.
+ * @param {string} [permalinkSelector="#sample-permalink"] - The CSS selector for the permalink element.
+ * @returns {Promise<string | null>} - The URL as a string, or `null` if no anchor tag is found.
+ */
+async function getViewUrl(page, permalinkSelector = "#sample-permalink") {
+	return await page.locator(`${permalinkSelector} a, ${permalinkSelector}`).evaluate((el) => {
+		return el.tagName === 'A' ? el.href : el.querySelector('a')?.href;
+	});
+}
+
 module.exports = {
 	templates,
 	selectGravityFormByTitle,
@@ -325,4 +338,5 @@ module.exports = {
 	countTableEntries,
 	clickDownloadButton,
 	createPageWithShortcode,
+	getViewUrl
 };
