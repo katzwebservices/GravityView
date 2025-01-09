@@ -204,15 +204,10 @@ async function publishView(page) {
  * Helper function to check a newly created GravityView on the front end.
  *
  * @param {import('playwright').Page} page - The Playwright page object.
- * @param {string} permalinkSelector - The CSS selector for the permalink element.
+ * @param {string} [permalinkSelector="#sample-permalink"] - The CSS selector for the permalink element.
  */
-async function checkViewOnFrontEnd(
-	page,
-	permalinkSelector = "#sample-permalink",
-) {
-	const viewUrl = await page.locator(`${permalinkSelector} a, ${permalinkSelector}`).evaluate((el) => {
-		return el.tagName === 'A' ? el.href : el.querySelector('a')?.href;
-	  });
+async function checkViewOnFrontEnd(page, permalinkSelector = "#sample-permalink") {
+	const viewUrl = await getViewUrl(page, permalinkSelector);
 	await page.goto(viewUrl);
 	await page.waitForURL(viewUrl);
 	await page.waitForLoadState("networkidle");
