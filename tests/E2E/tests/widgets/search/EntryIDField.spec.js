@@ -32,8 +32,11 @@ test("Entry ID Field", async ({ page }, testInfo) => {
 	await checkViewOnFrontEnd(page);
 	const link = page.getByRole("link", { name: "Bob" });
 	const url = await link.getAttribute("href");
-	const params = new URLSearchParams(url);
-	const entryId = params.get("entry");
+	const entryIdMatch = url.match(/\/entry\/(\d+)\//);
+	const entryId = entryIdMatch ? entryIdMatch[1] : null;
+	if (!entryId) {
+		throw new Error("Entry ID could not be extracted from the URL.");
+	}
 	await page.getByLabel("Entry ID").fill(entryId);
 	await page.getByRole("button", { name: "Search" }).click();
 	const bob = page.getByRole("cell", { name: "Bob", exact: true });
