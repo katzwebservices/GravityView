@@ -355,4 +355,5 @@ module.exports = {
 	clickDownloadButton,
 	createPageWithShortcode,
 	getViewUrl,
+	getOptionValueBySearchTerm,
 };
