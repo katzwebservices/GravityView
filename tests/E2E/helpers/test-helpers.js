@@ -197,6 +197,8 @@ async function checkViewOnFrontEnd(
 	page,
 	permalinkSelector = "#sample-permalink",
 ) {
+	const permalinkEl = page.locator(permalinkSelector);
+	await permalinkEl.waitFor({ state: "visible" });
 	const viewUrl = await getViewUrl(page, permalinkSelector);
 	await page.goto(viewUrl);
 	await page.waitForURL(viewUrl);
