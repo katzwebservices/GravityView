@@ -61,20 +61,10 @@ async function selectGravityFormByTitle(page, formTitle, testInfo = null) {
 		throw e;
 	}
 
-	const optionValue = await page.evaluate(
-		({ formTitle, selector }) => {
-			const select = document.querySelector(selector);
-			const options = Array.from(select.options);
-			const lowerCaseFormTitle = formTitle.toLowerCase();
-			const option = options.find((opt) =>
-				opt.textContent
-					.trim()
-					.toLowerCase()
-					.startsWith(lowerCaseFormTitle),
-			);
-			return option ? option.value : "";
-		},
-		{ formTitle, selector: formSelector },
+	const optionValue = await getOptionValueBySearchTerm(
+		page,
+		formSelector,
+		formTitle,
 	);
 
 	if (optionValue) {
@@ -324,6 +314,34 @@ async function getViewUrl(page, permalinkSelector = "#sample-permalink") {
 		return await element.getAttribute('href');
 	}
 	return await element.locator('a').first().getAttribute('href');
+}
+
+/**
+ * Gets the value of an option from a dropdown by matching a search term.
+ * Throws an error if no matching option is found.
+ *
+ * @param {object} page - The Playwright page object.
+ * @param {string} selector - The CSS selector for the dropdown.
+ * @param {string} searchTerm - The term to match the dropdown option.
+ * @returns {Promise<string>} - The value of the matching option.
+ * @throws Will throw an error if the matching option is not found.
+ */
+async function getOptionValueBySearchTerm(page, selector, searchTerm) {
+    return await page.evaluate(
+        ({ searchTerm, selector }) => {
+            const select = document.querySelector(selector);
+            const options = Array.from(select.options);
+            const lowerCaseSearchTerm = searchTerm.toLowerCase();
+            const option = options.find((opt) =>
+                opt.textContent
+                    .trim()
+                    .toLowerCase()
+                    .startsWith(lowerCaseSearchTerm),
+            );
+            return option ? option.value : "";
+        },
+        { searchTerm, selector },
+    );
 }
 
 module.exports = {
