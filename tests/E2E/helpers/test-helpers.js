@@ -42,21 +42,21 @@ const templates = [
  */
 async function selectGravityFormByTitle(page, formTitle, testInfo = null) {
 	const formSelector = "#gravityview_form_id";
-	const noFormsMessage = "Form(s) not found. Use 'npm run import:forms-entries' to import forms.";
-	
-  
-  try {
-	  const formLocator = page.locator(formSelector);
-	  const optionCount = await formLocator.evaluate((form) => {
-		return form.options.length;
-	  });
+	const noFormsMessage =
+		"Form(s) not found. Use 'npm run import:forms-entries' to import forms.";
 
-    if (optionCount < 2) {
-        console.warn(noFormsMessage);
-        testInfo
-            ? testInfo.skip(true, noFormsMessage)
-            : test.skip(noFormsMessage);
-    }
+	try {
+		const formLocator = page.locator(formSelector);
+		const optionCount = await formLocator.evaluate((form) => {
+			return form.options.length;
+		});
+
+		if (optionCount < 2) {
+			console.warn(noFormsMessage);
+			testInfo
+				? testInfo.skip(true, noFormsMessage)
+				: test.skip(noFormsMessage);
+		}
 	} catch (e) {
 		throw e;
 	}
@@ -126,18 +126,15 @@ async function createView(
 	{ formTitle, viewName, template },
 	testInfo = null,
 ) {
-    
 	await page.waitForSelector("text=New View", { state: "visible" });
-  await page.click("text=New View");
-  
-  try {
-    await selectGravityFormByTitle(page, formTitle, testInfo);
-  } catch (e) {
-    const formMissingMessage = `The form '${formTitle}' doesn't exist.`;
-    testInfo ?
-      testInfo.skip(true, formMissingMessage)
-      : test.skip();
-  }
+	await page.click("text=New View");
+
+	try {
+		await selectGravityFormByTitle(page, formTitle, testInfo);
+	} catch (e) {
+		const formMissingMessage = `The form '${formTitle}' doesn't exist.`;
+		testInfo ? testInfo.skip(true, formMissingMessage) : test.skip();
+	}
 
 	await page.fill("#title", viewName);
 
@@ -196,7 +193,10 @@ async function publishView(page) {
  * @param {import('playwright').Page} page - The Playwright page object.
  * @param {string} [permalinkSelector="#sample-permalink"] - The CSS selector for the permalink element.
  */
-async function checkViewOnFrontEnd(page, permalinkSelector = "#sample-permalink") {
+async function checkViewOnFrontEnd(
+	page,
+	permalinkSelector = "#sample-permalink",
+) {
 	const viewUrl = await getViewUrl(page, permalinkSelector);
 	await page.goto(viewUrl);
 	await page.waitForURL(viewUrl);
@@ -309,11 +309,11 @@ async function createPageWithShortcode(page, { shortcode, title }) {
  */
 async function getViewUrl(page, permalinkSelector = "#sample-permalink") {
 	const element = page.locator(permalinkSelector);
-	const isAnchor = await element.evaluate((el) => el.tagName === 'A');
+	const isAnchor = await element.evaluate((el) => el.tagName === "A");
 	if (isAnchor) {
-		return await element.getAttribute('href');
+		return await element.getAttribute("href");
 	}
-	return await element.locator('a').first().getAttribute('href');
+	return await element.locator("a").first().getAttribute("href");
 }
 
 /**
@@ -327,21 +327,21 @@ async function getViewUrl(page, permalinkSelector = "#sample-permalink") {
  * @throws Will throw an error if the matching option is not found.
  */
 async function getOptionValueBySearchTerm(page, selector, searchTerm) {
-    return await page.evaluate(
-        ({ searchTerm, selector }) => {
-            const select = document.querySelector(selector);
-            const options = Array.from(select.options);
-            const lowerCaseSearchTerm = searchTerm.toLowerCase();
-            const option = options.find((opt) =>
-                opt.textContent
-                    .trim()
-                    .toLowerCase()
-                    .startsWith(lowerCaseSearchTerm),
-            );
-            return option ? option.value : "";
-        },
-        { searchTerm, selector },
-    );
+	return await page.evaluate(
+		({ searchTerm, selector }) => {
+			const select = document.querySelector(selector);
+			const options = Array.from(select.options);
+			const lowerCaseSearchTerm = searchTerm.toLowerCase();
+			const option = options.find((opt) =>
+				opt.textContent
+					.trim()
+					.toLowerCase()
+					.startsWith(lowerCaseSearchTerm),
+			);
+			return option ? option.value : "";
+		},
+		{ searchTerm, selector },
+	);
 }
 
 module.exports = {
@@ -354,5 +354,5 @@ module.exports = {
 	countTableEntries,
 	clickDownloadButton,
 	createPageWithShortcode,
-	getViewUrl
+	getViewUrl,
 };
